@@ -1,0 +1,10 @@
+FROM balenalib/%%BALENA_MACHINE_NAME%%-alpine-golang:latest-run
+
+RUN apk add git
+WORKDIR /build
+COPY . .
+RUN go mod download
+RUN go build -o sensor-data-sending-service .
+
+# command to run on container start
+CMD [ "./sensor-data-sending-service" ]
